@@ -6,6 +6,7 @@ from rubik.optimize import optimize_moves
 
 def get_cube():
     # Schema = OOOOOOOOOYYYWWWGGGBBBYYYWWWGGGBBBYYYWWWGGGBBBRRRRRRRRR
+    # Schema 2 = BGBGBGBGBOROWYWRORYWYRORYWYOROWYWOROWYWRORYWYGBGBGBGBG (cross every face)
     # O = Orange, Y = Yellow, W = White, G = Green, B = Blue, R = Red
     #
         #     OOO
