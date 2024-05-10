@@ -1,0 +1,15 @@
+{
+    "L" : "Left clockwise",
+    "R" : "Right clockwise",
+    "U" : "Up clockwise",
+    "D" : "Down clockwise",
+    "F" : "Front clockwise",
+    "B" : "Back clockwise",
+    "Li" : "Left counterclockwise",
+    "Ri" : "Right counterclockwise",
+    "Ui" : "Up counterclockwise",
+    "Di" : "Down counterclockwise",
+    "Fi" : "Front counterclockwise",
+    "Bi" : "Back counterclockwise",
+    "a finir": "https://ruwix.com/the-rubiks-cube/notation/"
+}
