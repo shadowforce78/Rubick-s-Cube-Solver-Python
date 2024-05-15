@@ -11,5 +11,16 @@
     "Di" : "Down counterclockwise",
     "Fi" : "Front counterclockwise",
     "Bi" : "Back counterclockwise",
-    "a finir": "https://ruwix.com/the-rubiks-cube/notation/"
+    "M" : "Middle, the layer between L and R, turn direction as L",
+    "E" : "Equator, the layer between U and D, turn direction as D",
+    "S" : "Standing, the layer between F and B, turn direction as F",
+    "X" : "Rotate the cube on R face",
+    "Y" : "Rotate the cube on U face",
+    "Z" : "Rotate the cube on F face",
+    "Mi" : "Middle, the layer between L and R, turn direction as R",
+    "Ei" : "Equator, the layer between U and D, turn direction as U",
+    "Si" : "Standing, the layer between F and B, turn direction as B",
+    "Xi" : "Rotate the cube on L face",
+    "Yi" : "Rotate the cube on D face",
+    "Zi" : "Rotate the cube on B face"
 }
