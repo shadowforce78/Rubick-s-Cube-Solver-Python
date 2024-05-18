@@ -100,10 +100,6 @@ def moves_to_notation(moves):
     notation = ""
     for move in moves:
         notation += data[move] + "\n"
-    
-    # Make notation as an array
-    notation = notation.split("\n")
-    notation = notation[:-1]
 
     return notation
 
