@@ -41,59 +41,29 @@ def get_cube():
     return cube_to_solve
 
 
-def solve_cube(cube_string):
-    successes = 0
-    failures = 0
+def get_moves(solved_cube):
+    print('Here are the moves to solve the cube:')
+    print(solved_cube.moves)
 
-    avg_opt_moves = 0.0
-    avg_moves = 0.0
-    avg_time = 0.0
-    while True:
+
+def solve_cube(cube_string):
         C = cube_string
         solver = Solver(C)
-
-        start = time.time()
         solver.solve()
-        duration = time.time() - start
 
-        if C.is_solved():
-            opt_moves = optimize_moves(solver.moves)
-            successes += 1
-            avg_moves = (avg_moves * (successes - 1) + len(solver.moves)) / float(
-                successes
-            )
-            avg_time = (avg_time * (successes - 1) + duration) / float(successes)
-            avg_opt_moves = (avg_opt_moves * (successes - 1) + len(opt_moves)) / float(
-                successes
-            )
-        else:
-            failures += 1
-            print(f"Failed ({successes + failures}): {C.flat_str()}")
-
-        total = successes + failures
-        if total == 1 or total % 100 == 0:
-            pass_percentage = 100 * successes / total
-            print(
-                f"{total}: {successes} successes ({pass_percentage:0.3f}% passing)"
-                f" avg_moves={avg_moves:0.3f} avg_opt_moves={avg_opt_moves:0.3f}"
-                f" avg_time={avg_time:0.3f}s"
-            )
+        solved_moves = solver.moves
 
         print("Do you want to get the moves (y/n)?")
         response = input()
-        # get_moves = solver.moves
-        get_moves = moves_to_notation(solver.moves)
+        get_moves = moves_to_notation(solved_moves)
         if response == "y":
             print(get_moves)
         print("Do you want to display the moves in an image (y/n)?")
         response = input()
         if response == "y":
             moves_to_image()
-        print("Do you want to continue (y/n)?")
-        response = input()
-        if response == "n":
-            break
-
+        
+        return solver
 
 def moves_to_notation(moves):
     data = getJsonNotation()
@@ -137,7 +107,7 @@ def moves_to_image():
 
 def main():
     cube_string = get_cube()
-    solve_cube(cube_string)
+    get_moves(solve_cube(cube_string))
 
 
 if __name__ == "__main__":
