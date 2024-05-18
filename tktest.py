@@ -212,9 +212,6 @@ moves_notations = [
     "Down clockwise",
 ]
 
-def associate_moves_with_images():
-    # Get the json file with all the notation
-    data = getJsonNotation()
 
 def moves_to_image():
     # Create a window 200x200
@@ -233,6 +230,17 @@ def moves_to_image():
     button2 = tk.Button(bottom_frame, text="Next Image", fg="blue")
     button1.pack(side=tk.LEFT)
     button2.pack(side=tk.LEFT)
+
+    # Button one function
+    def associate_moves_with_images():
+        # Get the json file with all the notation
+        data = getJsonNotation()
+
+        moves_size = len(moves_notations)
+        print(moves_size)
+
+    # Bind the buttons to the functions
+    button1.config(command=associate_moves_with_images)
 
     imgFolder = "./images/"
 
