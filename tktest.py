@@ -295,3 +295,9 @@ def moves_to_image():
 
 if __name__ == "__main__":
     moves_to_image()
+
+
+
+# TODO : Add a label thats describes the move following the image
+# TODO : Fix the display of the image that is not synchronized with the moves
+# TODO : Add the last 8 moves to the image folder
