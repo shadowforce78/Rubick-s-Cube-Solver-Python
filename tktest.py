@@ -226,6 +226,10 @@ def moves_to_image():
     bottom_frame = tk.Frame(window)
     bottom_frame.pack(side=tk.BOTTOM)
 
+    # Add a label current_moves / total_moves
+    label_moves = tk.Label(bottom_frame, text="0 / 0")
+    label_moves.pack()
+
     # Add two buttons at the bottom
     button1 = tk.Button(bottom_frame, text="Previous Image", fg="red")
     button2 = tk.Button(bottom_frame, text="Next Image", fg="blue")
@@ -251,6 +255,9 @@ def moves_to_image():
         label.config(image=img)
         label.image = img
 
+        # Update the text
+        text.config(text=data[current_move_str])
+
     def button_next():
         global current_move
         associate_moves_with_images(current_move)
@@ -258,13 +265,23 @@ def moves_to_image():
         if current_move == total_moves:
             current_move = 0
 
+        label_moves.config(text=f"{current_move} / {total_moves}")
+
+    def button_previous():
+        global current_move
+        associate_moves_with_images(current_move)
+        current_move -= 1
+        if current_move == -1:
+            current_move = total_moves - 1
+
+        label_moves.config(text=f"{current_move} / {total_moves}")
+
     # Bind the buttons to the functions
+    button1.config(command=button_previous)
     button2.config(command=button_next)
 
-    imgFolder = "./images/"
-
     # Add an image to the top frame
-    img = tk.PhotoImage(file=imgFolder + "L.png")
+    img = tk.PhotoImage(file=f"./images/{moves[current_move]}.png")
     label = tk.Label(top_frame, image=img)
     label.pack()
 
