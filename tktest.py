@@ -300,4 +300,3 @@ if __name__ == "__main__":
 
 # TODO : Add a label thats describes the move following the image
 # TODO : Fix the display of the image that is not synchronized with the moves
-# TODO : Add the last 8 moves to the image folder
