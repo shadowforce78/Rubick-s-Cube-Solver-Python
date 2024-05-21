@@ -280,8 +280,9 @@ def moves_to_image():
     button1.config(command=button_previous)
     button2.config(command=button_next)
 
-    # Add an image to the top frame
+    # Add an image to the top frame, rezise it to 100x100
     img = tk.PhotoImage(file=f"./images/{moves[current_move]}.png")
+    img = img.subsample(2)  # Resize the image to 100x100
     label = tk.Label(top_frame, image=img)
     label.pack()
 
