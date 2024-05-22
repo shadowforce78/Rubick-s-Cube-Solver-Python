@@ -266,6 +266,7 @@ def moves_to_image():
             current_move = 0
 
         label_moves.config(text=f"{current_move} / {total_moves}")
+        img = tk.PhotoImage(file=f"./images/{moves[current_move]}.png")
 
     def button_previous():
         global current_move
@@ -275,13 +276,14 @@ def moves_to_image():
             current_move = total_moves - 1
 
         label_moves.config(text=f"{current_move} / {total_moves}")
+        img = tk.PhotoImage(file=f"./images/{moves[current_move]}.png")
 
     # Bind the buttons to the functions
     button1.config(command=button_previous)
     button2.config(command=button_next)
 
     # Add an image to the top frame, rezise it to 100x100
-    img = tk.PhotoImage(file=f"./images/{moves[current_move]}.png")
+    img = tk.PhotoImage(file=f"./images/rubik.png")
     img = img.subsample(2)  # Resize the image to 100x100
     label = tk.Label(top_frame, image=img)
     label.pack()
