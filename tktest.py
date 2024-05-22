@@ -1,5 +1,4 @@
 import tkinter as tk
-import json
 from main import getJsonNotation
 
 
@@ -298,8 +297,3 @@ def moves_to_image():
 
 if __name__ == "__main__":
     moves_to_image()
-
-
-
-# TODO : Add a label thats describes the move following the image
-# TODO : Fix the display of the image that is not synchronized with the moves
