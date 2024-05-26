@@ -1,5 +1,7 @@
 import tkinter as tk
-from main import getJsonNotation
+from main import get_json_notation
+import cv2
+import numpy as np
 
 
 moves = [
@@ -242,7 +244,7 @@ def moves_to_image():
 
     def associate_moves_with_images(current_moves):
         # Get the json file with all the notation
-        data = getJsonNotation()
+        data = get_json_notation()
 
         # Get the current move as a number
         current_move_str = moves[current_moves]
@@ -295,5 +297,99 @@ def moves_to_image():
     window.mainloop()
 
 
+def detect_rubiks_face_from_camera():
+    cap = cv2.VideoCapture(2)
+
+    if not cap.isOpened():
+        print("Erreur: Impossible d'ouvrir la caméra.")
+        return
+
+    def get_dominant_color(patch):
+        data = np.float32(patch).reshape((-1, 3))
+        _, labels, centers = cv2.kmeans(
+            data,
+            1,
+            None,
+            (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0),
+            10,
+            cv2.KMEANS_RANDOM_CENTERS,
+        )
+        return centers[0].astype(int)
+
+    def get_rubiks_color(bgr):
+        hsv = cv2.cvtColor(np.uint8([[bgr]]), cv2.COLOR_BGR2HSV)[0][0]
+        h, s, v = hsv
+
+        if s < 50:
+            return "white" if v > 200 else "gray"
+        if v < 50:
+            return "black"
+
+        if h < 10 or h >= 160:
+            return "red"
+        elif 10 <= h < 25:
+            return "orange"
+        elif 25 <= h < 35:
+            return "yellow"
+        elif 35 <= h < 85:
+            return "green"
+        elif 85 <= h < 125:
+            return "blue"
+        else:
+            return "red"
+
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            print("Erreur: Impossible de lire une image de la caméra.")
+            break
+
+        # Définir un carré au centre de l'image
+        height, width, _ = frame.shape
+        square_size = min(width, height) // 3
+        x_start = width // 2 - square_size // 2
+        y_start = height // 2 - square_size // 2
+
+        # Extraire la région d'intérêt (ROI)
+        roi = frame[y_start : y_start + square_size, x_start : x_start + square_size]
+
+        # Diviser la ROI en une grille 3x3
+        cell_size = square_size // 3
+        colors = []
+
+        for i in range(3):
+            row_colors = []
+            for j in range(3):
+                cell = roi[
+                    i * cell_size : (i + 1) * cell_size,
+                    j * cell_size : (j + 1) * cell_size,
+                ]
+                dominant_color = get_dominant_color(cell)
+                rubiks_color = get_rubiks_color(dominant_color)
+                row_colors.append(rubiks_color)
+                # Dessiner les cases sur l'image
+                cv2.rectangle(
+                    frame,
+                    (x_start + j * cell_size, y_start + i * cell_size),
+                    (x_start + (j + 1) * cell_size, y_start + (i + 1) * cell_size),
+                    (0, 255, 0),
+                    2,
+                )
+            colors.append(row_colors)
+
+        # Afficher les couleurs détectées dans la console
+        print("\n".join([" ".join(row) for row in colors]))
+
+        # Afficher l'image avec les cases détectées
+        cv2.imshow("Rubik's Cube Face Detection", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+
 if __name__ == "__main__":
-    moves_to_image()
+    detect_rubiks_face_from_camera()

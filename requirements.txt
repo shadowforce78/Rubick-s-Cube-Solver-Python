@@ -1,1 +1,3 @@
 rubik-cube
+opencv-python
+numpy
